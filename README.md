@@ -3,79 +3,102 @@
 Tela inicial (launcher) leve e pessoal para Android, feita em Kotlin com Jetpack Compose.
 Funciona em qualquer celular com **Android 5.0 ou mais novo**.
 
-**Como usar no celular**
-- **Deslize para cima** na tela inicial para abrir a gaveta de apps.
-- Na gaveta: toque para abrir um app; **segure o dedo** em um app para ver as informações dele (desinstalar, permissões).
-- Para fechar a gaveta: puxe para baixo ou use o botão "voltar".
-- **Segure o dedo em um espaço vazio** da tela inicial (ou toque em "Ajustes" na gaveta) para abrir as configurações do relógio.
+## Qual APK baixar
+
+| Arquivo | Para quê |
+|---|---|
+| **MPersonality.apk** | Versão **rápida** (release, otimizada com R8). **Use esta no dia a dia.** |
+| MPersonality-debug.apk | Versão de testes, mais lenta. Aparece como "MPersonality Debug" e pode ficar instalada junto com a outra. |
+
+Links diretos (sempre a versão mais nova):
+- https://github.com/Dhcitizen/MPersonality/releases/latest/download/MPersonality.apk
+- https://github.com/Dhcitizen/MPersonality/releases/latest/download/MPersonality-debug.apk
+
+> O `MPersonality.apk` só aparece depois que a chave de assinatura estiver guardada nos Secrets do GitHub (veja abaixo).
+
+## Como usar no celular
+
+**Tela inicial**
+- **Deslize para cima**: abre a gaveta de apps.
+- **Deslize para os lados**: troca de página.
+- **Segure um espaço vazio**: menu com "Criar card" e "Configurações".
+- **Segure um ícone**: menu com "Remover" e "Informações do app". Se arrastar sem soltar, você move o ícone.
+- **Arrastando**: solte numa célula, no dock (embaixo, até 5 apps) ou dentro de um card. Para remover, solte na faixa **"✕ Remover"** no topo. Segure o ícone na borda da tela para ir para outra página.
+
+**Gaveta de apps**
+- Toque para abrir o app.
+- Segure e **arraste** para colocar o app na tela inicial, no dock ou num card. Se só segurar, aparece o menu "Adicionar à tela inicial".
+
+**Cards de apps**
+- Segure um espaço vazio e escolha **"Criar card aqui"**. O editor abre na hora.
+- No editor você escolhe:
+  - título;
+  - borda: liga ou desliga, grossura e cor;
+  - cantos arredondados;
+  - fundo: transparente, desfoque ou cor sólida, com transparência ajustável;
+  - espaço entre os ícones;
+  - quais apps entram no card.
+- Segure o card para **editar, remover ou arrastar** para outra linha ou página.
+- Se o card tiver mais apps do que cabem, ele **rola para o lado**.
+
+**Relógio** (Configurações)
+- 7 estilos:
+  - hora gigante;
+  - hora empilhada;
+  - fina e elegante com data;
+  - contorno sem preenchimento;
+  - brilho suave;
+  - analógico minimalista;
+  - analógico clássico.
+- Fonte, tamanho, cor, sombra e posição (alinhamento e distância do topo).
+
+**Papel de parede** (Configurações)
+- **"Escolher imagem da galeria"**: a imagem é reduzida para a resolução da tela, o que deixa o app leve, e ativa o efeito de desfoque nos cards e na gaveta.
 
 ---
 
-## Passo a passo (sem precisar saber programar)
+## Guardar a chave de assinatura nos Secrets do GitHub (uma vez só)
 
-### 1. Criar uma conta no GitHub
-1. Acesse **https://github.com/signup** e crie sua conta (e-mail, senha e nome de usuário).
-2. Confirme o e-mail que o GitHub enviar.
+A chave foi criada na pasta **Documentos → MPersonality-chave** do computador. Lá também tem um `LEIA-ME.txt` com este mesmo passo a passo.
 
-### 2. Instalar o GitHub Desktop no computador
-1. Baixe em **https://desktop.github.com** e instale.
-2. Abra o programa e clique em **Sign in to GitHub.com**. Entre com a conta que você criou.
+1. Abra https://github.com/Dhcitizen/MPersonality e clique na aba **Settings**.
+2. No menu da esquerda: **Secrets and variables → Actions**.
+3. Clique em **New repository secret** e crie o primeiro secret:
+   - **Name:** `MPERSONALITY_KEYSTORE_BASE64`
+   - **Secret:** abra `chave-em-base64.txt` no Bloco de Notas, aperte **Ctrl+A**, depois **Ctrl+C**, e cole aqui.
+   - Clique em **Add secret**.
+4. Clique de novo em **New repository secret** e crie o segundo:
+   - **Name:** `MPERSONALITY_KEYSTORE_PASSWORD`
+   - **Secret:** copie e cole o conteúdo de `senha.txt`.
+   - Clique em **Add secret**.
+5. Vá na aba **Actions**, clique em **Gerar APK** (à esquerda), depois em **Run workflow** e confirme em **Run workflow**.
+6. Quando aparecer o ✓ verde (uns 5 minutos), o `MPersonality.apk` estará no link acima.
 
-### 3. Transformar esta pasta em um repositório
-1. No GitHub Desktop, vá em **File → Add local repository...**
-2. Clique em **Choose...** e selecione a pasta deste projeto (a que tem este arquivo `README.md`).
-3. Vai aparecer o aviso *"This directory does not appear to be a Git repository"*. Clique no link **create a repository**.
-4. No campo **Name**, escreva `MPersonality`. Deixe o resto como está e clique em **Create repository**.
-
-### 4. Enviar o projeto para o GitHub
-1. Clique no botão azul **Publish repository** (no topo).
-2. **Desmarque** a opção *Keep this code private*. Assim fica mais fácil baixar o APK pelo celular, sem precisar fazer login. Pode deixar privado se preferir, mas aí você precisa estar logado no GitHub no navegador do celular.
-3. Clique em **Publish repository**.
-
-### 5. Esperar o APK ser gerado
-1. No navegador, abra `https://github.com/SEU-USUARIO/MPersonality` (troque `SEU-USUARIO` pelo seu nome de usuário).
-2. Clique na aba **Actions**. Vai aparecer uma tarefa chamada **Gerar APK** rodando (bolinha amarela).
-3. Espere uns 5 minutos até aparecer um **✓ verde**. Se aparecer um **X vermelho**, deu erro: clique nele, copie a mensagem e me mande.
-
-### 6. Baixar o APK no celular
-No navegador do celular (Chrome), abra:
-
-```
-https://github.com/SEU-USUARIO/MPersonality/releases/latest/download/MPersonality-debug.apk
-```
-
-O download começa direto. Esse endereço **sempre** baixa a versão mais recente.
-
-> Outra forma: na página do projeto, na coluna da direita, clique em **Releases → MPersonality - versão de teste** e toque em `MPersonality-debug.apk`.
-
-### 7. Instalar no celular
-1. Toque no arquivo baixado (na notificação de download ou no app **Arquivos**).
-2. O Android vai pedir permissão para **instalar apps desconhecidos** a partir do Chrome. Toque em **Configurações**, ative **Permitir desta fonte** e volte.
-3. Toque em **Instalar**.
-4. Se o **Play Protect** avisar que o app não é conhecido, toque em **Mais detalhes → Instalar mesmo assim**. Isso acontece porque o app não veio da Play Store. É normal para um app feito por você.
-
-### 8. Usar o MPersonality como tela inicial
-1. Aperte o botão **Início** (ou faça o gesto de ir para o início). O Android deve perguntar qual tela inicial usar. Escolha **MPersonality** e depois **Sempre**.
-2. Se ele não perguntar: abra o MPersonality, entre em **Ajustes → Definir como tela inicial padrão**, ou vá em **Configurações do Android → Apps → Apps padrão → App de tela inicial** e escolha **MPersonality**.
-
-**Para voltar à tela inicial original da Motorola:** faça o mesmo caminho (*Apps → Apps padrão → App de tela inicial*) e escolha a tela inicial original.
+**Importante:** faça uma cópia da pasta `MPersonality-chave` num lugar seguro, como um pendrive ou Google Drive. Sem essa chave, não dá para atualizar o app sem desinstalar.
 
 ---
 
-## Como atualizar o app depois
-Sempre que o projeto for alterado nesta pasta:
-1. Abra o GitHub Desktop. As mudanças aparecem na lista à esquerda.
-2. No campo **Summary** (canto inferior esquerdo), escreva um resumo curto, por exemplo `novo estilo de relógio`.
-3. Clique em **Commit to main** e depois em **Push origin** (no topo).
-4. Espere o ✓ verde na aba **Actions** e baixe o APK pelo mesmo link do passo 6.
-5. Instale por cima da versão antiga. Não precisa desinstalar, e as suas configurações continuam salvas.
+## Passo a passo do começo (para referência)
+
+1. **Instalar no celular:**
+   - Abra o link do APK no Chrome do celular e toque no arquivo baixado.
+   - Permita "instalar apps desconhecidos" para o Chrome.
+   - Se o Play Protect avisar, toque em **Mais detalhes → Instalar mesmo assim**.
+2. **Definir como tela inicial:**
+   - Aperte o botão Início e escolha **MPersonality → Sempre**.
+   - Ou vá em **Configurações do Android → Apps → Apps padrão → App de tela inicial**.
+3. **Voltar para a tela da Motorola:** use o mesmo caminho do passo 2 e escolha a tela inicial original.
+4. **Atualizar:** quando o projeto for alterado, o GitHub gera os APKs de novo nos mesmos links. Basta instalar por cima.
 
 ---
 
 ## Detalhes técnicos
-- Kotlin + Jetpack Compose (foundation + material3). Nenhuma outra biblioteca.
-- O papel de parede é o do próprio sistema (tema `Theme.Material.Wallpaper`), sem custo extra de memória.
-- O relógio atualiza uma vez por minuto e só enquanto a tela está visível.
-- As configurações ficam salvas no aparelho (`SharedPreferences`). Sem servidor, sem login, sem internet.
-- A pasta `keystore/` tem uma chave de **debug** fixa. Assim todo APK gerado pelo GitHub Actions tem a mesma assinatura e instala por cima do anterior. Ela não é segredo e serve só para testes. Não use essa chave para publicar na Play Store.
-- O GitHub Actions (`.github/workflows/gerar-apk.yml`) gera o APK a cada push. O APK fica salvo na aba Actions (por 30 dias) e, no branch `main`, também é publicado na release `ultima-versao`.
+- **Bibliotecas:** só Kotlin + Jetpack Compose (foundation e material3), sem nenhuma outra.
+- **Release:** R8 com minify e shrinkResources. A assinatura vem dos Secrets; a chave nunca fica no repositório.
+- **Debug:** usa `applicationIdSuffix = ".debug"` e a chave de testes fixa da pasta `keystore/`.
+- **Ícones:** desenhados em segundo plano e guardados em cache (LRU). Os da tela inicial são pré-carregados primeiro.
+- **Lista de apps:** só é recarregada quando o Android avisa que algum app mudou (`LauncherApps.Callback`).
+- **Relógio:** fica numa camada gráfica própria (`graphicsLayer`) e atualiza uma vez por minuto, só com a tela visível. Os relógios analógicos leem a hora só na fase de desenho.
+- **Papel de parede:** é decodificado com `inSampleSize`, recortado e salvo na resolução da tela. O desfoque é calculado uma única vez, numa cópia pequena. Com papel de parede próprio, o sistema deixa de desenhar o dele por trás (`FLAG_SHOW_WALLPAPER` desligada).
+- **Arrastar:** a posição do dedo é lida só na fase de layout e desenho, então a tela não é recomposta a cada movimento.
+- **Armazenamento:** layout, cards e configurações ficam no próprio aparelho (`SharedPreferences`). Sem servidor, sem login.
