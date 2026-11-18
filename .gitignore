@@ -6,3 +6,9 @@ local.properties
 .DS_Store
 .kotlin/
 captures/
+
+# Nunca enviar a chave do release para o GitHub
+*.jks
+keystore/release*
+senha.txt
+chave-em-base64.txt

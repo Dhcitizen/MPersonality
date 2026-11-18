@@ -4,6 +4,14 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+// A chave do APK release NÃO fica no projeto. O GitHub Actions a recebe dos
+// "Secrets" do repositório e informa o caminho e a senha por estas variáveis.
+val releaseKeystorePath: String = System.getenv("MPERSONALITY_KEYSTORE_FILE") ?: ""
+val releaseKeystorePassword: String = System.getenv("MPERSONALITY_KEYSTORE_PASSWORD") ?: ""
+val hasReleaseKey = releaseKeystorePath.isNotBlank() &&
+    releaseKeystorePassword.isNotBlank() &&
+    file(releaseKeystorePath).exists()
+
 android {
     namespace = "com.mpersonality.launcher"
     compileSdk = 35
@@ -12,25 +20,44 @@ android {
         applicationId = "com.mpersonality.launcher"
         minSdk = 21 // Android 5.0 ou mais novo: funciona em praticamente qualquer celular
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1"
+        versionCode = 2
+        versionName = "0.2"
+        resValue("string", "app_name", "MPersonality")
     }
 
-    // Chave fixa de debug guardada no projeto. Assim todo APK gerado pelo GitHub
-    // tem a mesma "assinatura" e pode ser instalado por cima da versão anterior
-    // sem precisar desinstalar (e sem perder as configurações).
     signingConfigs {
+        // Chave fixa de debug guardada no projeto (não é segredo, serve só para testes).
         getByName("debug") {
             storeFile = rootProject.file("keystore/debug.keystore")
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        if (hasReleaseKey) {
+            create("release") {
+                storeFile = file(releaseKeystorePath)
+                storePassword = releaseKeystorePassword
+                keyAlias = "mpersonality"
+                keyPassword = releaseKeystorePassword
+            }
+        }
     }
 
     buildTypes {
         getByName("debug") {
+            // Nome e identificação diferentes: o debug e o release podem ficar instalados juntos.
+            applicationIdSuffix = ".debug"
+            resValue("string", "app_name", "MPersonality Debug")
             signingConfig = signingConfigs.getByName("debug")
+        }
+        getByName("release") {
+            // R8: remove código não usado e otimiza o resto. Deixa o app bem mais rápido.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            if (hasReleaseKey) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
@@ -45,6 +72,10 @@ android {
 
     buildFeatures {
         compose = true
+    }
+
+    lint {
+        checkReleaseBuilds = false
     }
 }
 
