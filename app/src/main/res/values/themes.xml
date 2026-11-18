@@ -1,0 +1,10 @@
+<resources>
+    <!-- Tema do sistema que mostra o papel de parede do celular por trás do app.
+         Não usa nenhuma biblioteca extra. -->
+    <style name="Theme.MPersonality" parent="android:Theme.Material.Wallpaper.NoTitleBar">
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>
